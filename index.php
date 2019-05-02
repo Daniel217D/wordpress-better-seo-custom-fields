@@ -1,17 +1,16 @@
 <?php
 /*
-Plugin Name: SEO Custom Fields
-Description: SEO Custom Fields plugin allows you to add custom meta tags for category and tag pages. You can override the title and set meta description and meta keywords for category and tag pages.
-Plugin URI: http://product.soandso.biz/veb-zastosunki/plagini-wordpress/plagin-seo-custom-fields.html
-Author: Dmytriyenko Vyacheslav, Denis Pishniak
-Author URI: https://soandso.biz/
-Version: 1.0.2
+Plugin Name: Better SEO Custom Fields
+Description: Better SEO Custom Fields plugin allows you to add custom meta tags for category (woocommerce) and tag pages. You can override the title and set meta description and meta keywords for category and tag pages.
+Plugin URI: https://github.com/Daniel217D/wordpress-seo-custom-fields
+Author: Daniil Dubchenko
+Version: 2.0.0
 License: GPL2
 */
 
 /*
 
-    Copyright (C) 2017 Dmytriyenko Vyacheslav  (email: info@soandso.biz)
+    Copyright (C) 2019 Daniil Dubchenko  (email: daniel217032001@gmail.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as
@@ -46,7 +45,6 @@ License: GPL2
     add_action('edit_tag_form_fields', array('scfClassGeneral', 'scf_action_function_edittag'));
     add_action("create_{$taxname2}", array('scfClassGeneral', 'scf_save_custom_taxonomy_meta'));
     add_action("edited_{$taxname2}", array('scfClassGeneral', 'scf_save_custom_taxonomy_meta'));
-    add_filter('pre_get_document_title', array('scfClassView', 'scf_filter_function_tagtitle'));
     add_action('wp_head', array('scfClassView', 'scf_add_taxseo_head_meta_fields'));
     register_activation_hook( __FILE__, array('scfClassInitialization', 'scf_seo_activation') );
     register_deactivation_hook( __FILE__, array('scfClassInitialization', 'scf_seo_deactivation'));
