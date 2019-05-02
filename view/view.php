@@ -1,18 +1,13 @@
 <?php 
 	class scfClassView
 	{
-
-
 		static function scf_add_taxseo_head_meta_fields()
 		{
-echo 11;
 			if(is_category() || self::check_woocommerce() )
 			{
-				echo 32132;
 				$term = get_queried_object();
 				$description = get_term_meta( $term->term_id, 'description', true );
 				$keywords = get_term_meta( $term->term_id, 'keywords', true );
-				echo $description;
 				if(!empty($description))
 				{
 					echo '<meta name="description" content="'.esc_html( $description ).'">'. "\n";
