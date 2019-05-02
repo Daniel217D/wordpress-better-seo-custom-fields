@@ -15,22 +15,7 @@
 			add_settings_section( 'metaseo_options_id', 'SEO Custom Fields Options', '', 'metaseo_settings_options' );
 			add_settings_field( 'metaseo_options_title', 'Number symbols of title', array(__CLASS__,'scf_number_symbol_title'), 'metaseo_settings_options', 'metaseo_options_id', array('label_for' => 'metaseo_options_title') );
 			add_settings_field( 'metaseo_options_description', 'Number symbols of description', array(__CLASS__,'scf_number_symbol_description'), 'metaseo_settings_options', 'metaseo_options_id', array('label_for' => 'metaseo_options_description') );
-			add_action('admin_enqueue_scripts', array(__CLASS__, 'scf_seo_plugin_scrit'));
 
-		}
-
-		public static function scf_seo_plugin_scrit()
-		{
-			if(is_admin())
-			{
-				if(!wp_style_is('bootstrap-main'))
-				{
-					wp_register_style('bootstrap', plugins_url('/view/source/css/bootstrap.min.css', __FILE__));
-					wp_enqueue_style('bootstrap');
-					wp_register_script('bootstrap', plugins_url('/view/source/js/bootstrap.min.js', __FILE__), array('jquery'), null, true);
-					wp_enqueue_script('bootstrap');
-				}
-			}
 		}
 
 		function scf_number_symbol_title()

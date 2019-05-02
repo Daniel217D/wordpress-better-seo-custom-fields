@@ -35,7 +35,6 @@ License: GPL2
     include_once ('view/view.php');
     $taxname1 = 'category';
 	$taxname2 = 'post_tag';
-	$taxname3 = 'product_cat';
 
     add_action( 'admin_menu', array('scfClassInitialization', 'scf_add_menu_seo'));
     add_action('admin_init', array('scfClassInitialization', 'scf_metaseo_admin_settings'));
@@ -43,8 +42,6 @@ License: GPL2
 	add_action("{$taxname1}_edit_form_fields", array('scfClassGeneral', 'scf_edit_new_custom_fields'));
 	add_action("create_{$taxname1}", array('scfClassGeneral', 'scf_save_custom_taxonomy_meta'));
 	add_action("edited_{$taxname1}", array('scfClassGeneral', 'scf_save_custom_taxonomy_meta'));
-	add_action("create_{$taxname3}", array('scfClassGeneral', 'scf_save_custom_taxonomy_meta'));
-	add_action("edited_{$taxname3}", array('scfClassGeneral', 'scf_save_custom_taxonomy_meta'));
     add_action('add_tag_form_fields', array('scfClassGeneral', 'scf_action_function_addtag'));
     add_action('edit_tag_form_fields', array('scfClassGeneral', 'scf_action_function_edittag'));
     add_action("create_{$taxname2}", array('scfClassGeneral', 'scf_save_custom_taxonomy_meta'));
@@ -53,8 +50,16 @@ License: GPL2
     add_action('wp_head', array('scfClassView', 'scf_add_taxseo_head_meta_fields'));
     register_activation_hook( __FILE__, array('scfClassInitialization', 'scf_seo_activation') );
     register_deactivation_hook( __FILE__, array('scfClassInitialization', 'scf_seo_deactivation'));
-/**
-// remove AIOSeoP from category page
+
+	if(class_exists( 'WooCommerce' )){
+		$taxname3 = 'product_cat';
+		add_action("create_{$taxname3}", array('scfClassGeneral', 'scf_save_custom_taxonomy_meta'));
+		add_action("edited_{$taxname3}", array('scfClassGeneral', 'scf_save_custom_taxonomy_meta'));
+	}
+/*
+Remove AIOSeoP from category page
+Add this code to your theme if use AIOSeoP
+
 function remove_AIOSeoP_from_category_page()
 {
 	if(is_category() || is_product_category()){
@@ -65,4 +70,4 @@ function remove_AIOSeoP_from_category_page()
 }
 
 add_action( 'wp', __NAMESPACE__ . '\\remove_AIOSeoP_from_category_page' );
- **/
+ */
