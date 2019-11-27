@@ -54,18 +54,3 @@ License: GPL2
 		add_action("create_{$taxname3}", array('scfClassGeneral', 'scf_save_custom_taxonomy_meta'));
 		add_action("edited_{$taxname3}", array('scfClassGeneral', 'scf_save_custom_taxonomy_meta'));
 	}
-/*
-Remove AIOSeoP from category page
-Add this code to your theme if use AIOSeoP
-
-function remove_AIOSeoP_from_category_page()
-{
-	if(is_category() || is_product_category()){
-		global $aiosp;
-		remove_action( 'wp_head', array( $aiosp, 'wp_head' ),1);
-		remove_action( 'template_redirect', array( $aiosp, 'template_redirect' ),0);
-	}
-}
-
-add_action( 'wp', __NAMESPACE__ . '\\remove_AIOSeoP_from_category_page' );
- */
