@@ -24,7 +24,7 @@ class scfClassView
         {
             echo '<meta name="description" content="'.esc_html( $description ).'">'. "\n";
         }
-        
+
         if(!empty($keywords))
         {
             echo '<meta name="keywords" content="'.esc_html( $keywords ).'">'. "\n";
