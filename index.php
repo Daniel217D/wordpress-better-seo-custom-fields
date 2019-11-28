@@ -4,7 +4,7 @@ Plugin Name: Better SEO Custom Fields
 Description: Better SEO Custom Fields plugin allows you to add custom meta tags for category (woocommerce) and tag pages. You can override the title and set meta description and meta keywords for category and tag pages.
 Plugin URI: https://github.com/Daniel217D/wordpress-seo-custom-fields
 Author: Daniil Dubchenko
-Version: 2.0.0
+Version: 2.1.0
 License: GPL2
 */
 
