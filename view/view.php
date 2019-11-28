@@ -3,7 +3,6 @@ class scfClassView
 {
     static function scf_add_taxseo_head_meta_fields()
     {
-        $term = '';
         $description = '';
         $keywords = '';
 
@@ -31,6 +30,27 @@ class scfClassView
         }
     }
 
+    static function scf_add_taxseo_head_title($title_parts)
+    {
+        $new_title = "";
+
+        if(is_category() || self::check_woocommerce() )
+        {
+            $new_title = get_term_meta(get_queried_object()->term_id, 'title', true );
+        }
+        else if(is_tag())
+        {
+            $new_title = get_metadata(get_queried_object()->term_id, 'title', true );
+        }
+
+        if(!empty($new_title))
+        {
+            $title_parts['title'] = $new_title;
+            return $title_parts;
+        }
+
+        return $title_parts;
+    }
 
     public static function check_woocommerce()
     {

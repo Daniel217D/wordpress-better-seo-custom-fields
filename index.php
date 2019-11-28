@@ -27,30 +27,31 @@ License: GPL2
 */
 
 
-    define('SEO_Custom_Fields', true);
-    define('SCF_PLAGIN_PATH', plugin_dir_path( __FILE__ ));
-    include_once ('init.php');
-    include_once ('general.php');
-    include_once ('view/view.php');
-    $taxname1 = 'category';
-	$taxname2 = 'post_tag';
+define('SEO_Custom_Fields', true);
+define('SCF_PLAGIN_PATH', plugin_dir_path( __FILE__ ));
+include_once ('init.php');
+include_once ('general.php');
+include_once ('view/view.php');
+$taxname1 = 'category';
+$taxname2 = 'post_tag';
 
-    add_action( 'admin_menu', array('scfClassInitialization', 'scf_add_menu_seo'));
-    add_action('admin_init', array('scfClassInitialization', 'scf_metaseo_admin_settings'));
-	add_action("{$taxname1}_add_form_fields", array('scfClassGeneral', 'scf_add_new_custom_fields'));
-	add_action("{$taxname1}_edit_form_fields", array('scfClassGeneral', 'scf_edit_new_custom_fields'));
-	add_action("create_{$taxname1}", array('scfClassGeneral', 'scf_save_custom_taxonomy_meta'));
-	add_action("edited_{$taxname1}", array('scfClassGeneral', 'scf_save_custom_taxonomy_meta'));
-    add_action('add_tag_form_fields', array('scfClassGeneral', 'scf_action_function_addtag'));
-    add_action('edit_tag_form_fields', array('scfClassGeneral', 'scf_action_function_edittag'));
-    add_action("create_{$taxname2}", array('scfClassGeneral', 'scf_save_custom_taxonomy_meta'));
-    add_action("edited_{$taxname2}", array('scfClassGeneral', 'scf_save_custom_taxonomy_meta'));
-    add_action('wp_head', array('scfClassView', 'scf_add_taxseo_head_meta_fields'));
-    register_activation_hook( __FILE__, array('scfClassInitialization', 'scf_seo_activation') );
-    register_deactivation_hook( __FILE__, array('scfClassInitialization', 'scf_seo_deactivation'));
+add_action( 'admin_menu', array('scfClassInitialization', 'scf_add_menu_seo'));
+add_action('admin_init', array('scfClassInitialization', 'scf_metaseo_admin_settings'));
+add_action("{$taxname1}_add_form_fields", array('scfClassGeneral', 'scf_add_new_custom_fields'));
+add_action("{$taxname1}_edit_form_fields", array('scfClassGeneral', 'scf_edit_new_custom_fields'));
+add_action("create_{$taxname1}", array('scfClassGeneral', 'scf_save_custom_taxonomy_meta'));
+add_action("edited_{$taxname1}", array('scfClassGeneral', 'scf_save_custom_taxonomy_meta'));
+add_action('add_tag_form_fields', array('scfClassGeneral', 'scf_action_function_addtag'));
+add_action('edit_tag_form_fields', array('scfClassGeneral', 'scf_action_function_edittag'));
+add_action("create_{$taxname2}", array('scfClassGeneral', 'scf_save_custom_taxonomy_meta'));
+add_action("edited_{$taxname2}", array('scfClassGeneral', 'scf_save_custom_taxonomy_meta'));
+add_action('wp_head', array('scfClassView', 'scf_add_taxseo_head_meta_fields'));
+add_action('document_title_parts', array('scfClassView', 'scf_add_taxseo_head_title'), 100, 1);
+register_activation_hook( __FILE__, array('scfClassInitialization', 'scf_seo_activation') );
+register_deactivation_hook( __FILE__, array('scfClassInitialization', 'scf_seo_deactivation'));
 
-	if(class_exists( 'WooCommerce' )){
-		$taxname3 = 'product_cat';
-		add_action("create_{$taxname3}", array('scfClassGeneral', 'scf_save_custom_taxonomy_meta'));
-		add_action("edited_{$taxname3}", array('scfClassGeneral', 'scf_save_custom_taxonomy_meta'));
-	}
+if(class_exists( 'WooCommerce' )){
+    $taxname3 = 'product_cat';
+    add_action("create_{$taxname3}", array('scfClassGeneral', 'scf_save_custom_taxonomy_meta'));
+    add_action("edited_{$taxname3}", array('scfClassGeneral', 'scf_save_custom_taxonomy_meta'));
+}
