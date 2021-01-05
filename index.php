@@ -4,7 +4,7 @@ Plugin Name: Better SEO Custom Fields
 Description: Better SEO Custom Fields plugin allows you to add custom meta tags for category (woocommerce) and tag pages. You can override the title and set meta description and meta keywords for category and tag pages.
 Plugin URI: https://github.com/Daniel217D/wordpress-seo-custom-fields
 Author: Daniil Dubchenko
-Version: 2.1.0
+Version: 3.0.0
 License: GPL2
 */
 
@@ -28,30 +28,28 @@ License: GPL2
 
 
 define('SEO_Custom_Fields', true);
-define('SCF_PLAGIN_PATH', plugin_dir_path( __FILE__ ));
-include_once ('init.php');
-include_once ('general.php');
-include_once ('view/view.php');
-$taxname1 = 'category';
-$taxname2 = 'post_tag';
+define('SCF_PLAGIN_PATH', plugin_dir_path(__FILE__));
 
-add_action( 'admin_menu', array('scfClassInitialization', 'scf_add_menu_seo'));
-add_action('admin_init', array('scfClassInitialization', 'scf_metaseo_admin_settings'));
-add_action("{$taxname1}_add_form_fields", array('scfClassGeneral', 'scf_add_new_custom_fields'));
-add_action("{$taxname1}_edit_form_fields", array('scfClassGeneral', 'scf_edit_new_custom_fields'));
-add_action("create_{$taxname1}", array('scfClassGeneral', 'scf_save_custom_taxonomy_meta'));
-add_action("edited_{$taxname1}", array('scfClassGeneral', 'scf_save_custom_taxonomy_meta'));
-add_action('add_tag_form_fields', array('scfClassGeneral', 'scf_action_function_addtag'));
-add_action('edit_tag_form_fields', array('scfClassGeneral', 'scf_action_function_edittag'));
-add_action("create_{$taxname2}", array('scfClassGeneral', 'scf_save_custom_taxonomy_meta'));
-add_action("edited_{$taxname2}", array('scfClassGeneral', 'scf_save_custom_taxonomy_meta'));
-add_action('wp_head', array('scfClassView', 'scf_add_taxseo_head_meta_fields'));
-add_action('document_title_parts', array('scfClassView', 'scf_add_taxseo_head_title'), 100, 1);
-register_activation_hook( __FILE__, array('scfClassInitialization', 'scf_seo_activation') );
-register_deactivation_hook( __FILE__, array('scfClassInitialization', 'scf_seo_deactivation'));
+include_once('scfClassGeneral.php');
+include_once('scfClassView.php');
 
-if(class_exists( 'WooCommerce' )){
-    $taxname3 = 'product_cat';
-    add_action("create_{$taxname3}", array('scfClassGeneral', 'scf_save_custom_taxonomy_meta'));
-    add_action("edited_{$taxname3}", array('scfClassGeneral', 'scf_save_custom_taxonomy_meta'));
+add_filter('aioseo_disable_title_rewrites', '__return_true');
+
+add_action('wp_head', ['scfClassView', 'print_meta_fields']);
+add_action('document_title_parts', ['scfClassView', 'title_filter']);
+
+if(is_admin()) {
+    $taxnames = ['category', 'post_tag'];
+
+    if (class_exists('WooCommerce')) {
+        $taxnames[] = 'product_cat';
+    }
+
+    foreach ($taxnames as $taxname) {
+        add_action("{$taxname}_add_form_fields", ['scfClassGeneral', 'print_adding_fields']);
+        add_action("{$taxname}_edit_form_fields", ['scfClassGeneral', 'print_editing_fields']);
+
+        add_action("create_{$taxname}", ['scfClassGeneral', 'save_data']);
+        add_action("edited_{$taxname}", ['scfClassGeneral', 'save_data']);
+    }
 }
