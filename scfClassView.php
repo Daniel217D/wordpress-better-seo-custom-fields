@@ -6,7 +6,6 @@ class scfClassView {
             $term = get_queried_object();
             $description = get_term_meta($term->term_id, 'description', true);
             $keywords = get_term_meta($term->term_id, 'keywords', true);
-
             if (!empty($description)) {
                 echo '<meta name="description" content="' . esc_html($description) . '">' . "\n";
             }
@@ -27,6 +26,13 @@ class scfClassView {
         }
 
         return $title_parts;
+    }
+
+    static public function aioseo_disable_title_rewrites($default) {
+        if(self::should_print()) {
+            return '';
+        }
+        return $default;
     }
 
     static public function should_print() {
